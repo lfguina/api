@@ -17,5 +17,8 @@ api.delete('/album/:id', md_auth.ensureAuth, AlbumController.deleteAlbum);
 api.post('/upload/album/:id', [md_auth.ensureAuth, md_upload], AlbumController.uploadImagen);
 api.get('/imagen/album/:imageFile', AlbumController.getImageFile);
 
+api.get('/album/buscar/:termino', md_auth.ensureAuth, AlbumController.buscarTermino);
+//buscar por terminos
+
 
 module.exports = api;

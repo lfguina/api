@@ -32,7 +32,7 @@ function getArtista(req, res) {
 //obtener todos los artisttas paginados
 function getArtistas(req, res) {
     let desde = req.params.desde || 0;
-    desde = Number(desde);
+    desde = Number(desde - 1);
 
     let limite = req.params.limite || 4;
     limite = Number(limite)
@@ -57,6 +57,33 @@ function getArtistas(req, res) {
 
         });
 }
+
+
+function getTodosLosArtistas(req, res) {
+
+    Artista.find({ estado: true })
+
+    .exec((err, artistaBD) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        } //fin del if el error
+        Artista.count({ estado: true }, (err, conteo) => {
+            res.json({
+                ok: true,
+                artistas: artistaBD,
+                total: conteo
+            });
+        });
+
+
+    });
+}
+
+
+
 
 function saveArtista(req, res) {
     var artista = new Artista();
@@ -216,6 +243,31 @@ function getImagenFile(req, res) {
     });
 }
 
+function buscarTermino(req, res) {
+
+    let termino = req.params.termino;
+    //expresion regular
+    let regex = new RegExp(termino, 'i');
+    Artista.find({ estado: true, nombre: regex })
+        // .populate('categoria','nombre')
+        .exec((err, artistasDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            res.json({
+                ok: true,
+                artistas: artistasDB
+            });
+        });
+
+
+}
+
+
 module.exports = {
     getArtista,
     saveArtista,
@@ -223,5 +275,7 @@ module.exports = {
     updateArtista,
     deleteArtista,
     uploadImagen,
-    getImagenFile
+    getImagenFile,
+    getTodosLosArtistas,
+    buscarTermino
 }

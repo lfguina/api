@@ -18,4 +18,12 @@ api.post('/upload/artista/:id', [md_auth.ensureAuth, md_upload], ArtistControlle
 api.get('/imagen/artista/:imageFile', ArtistController.getImagenFile);
 
 
+api.get('/all/artistas', md_auth.ensureAuth, ArtistController.getTodosLosArtistas);
+//devuelve todos execpto 
+api.get('/artista/buscar/:termino', md_auth.ensureAuth, ArtistController.buscarTermino);
+//buscar por terminos
+
+
+
+
 module.exports = api;

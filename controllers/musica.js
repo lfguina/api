@@ -201,6 +201,73 @@ function getMusicaFile(req, res) {
 
 
 
+
+function getMusicasArtista(req, res) {
+    var artista_id = req.params.artista_id;
+    Artista.find({ estado: true, _id: artista_id })
+        .exec((err, artistaDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            Album.find({ estado: true, artista: artistaDB[0]._id })
+                .exec((err, albumDB) => {
+                    if (err) {
+                        return res.status(500).json({
+                            ok: false,
+                            err
+                        });
+                    } //finde del if err
+                    Musica.find({ estado: true, album: albumDB[0]._id })
+                        .exec((err, musicaDB) => {
+                            if (err) {
+                                return res.status(500).json({
+                                    ok: false,
+                                    err
+                                });
+                            } //finde del if err
+
+                            res.send({
+                                ok: true,
+                                musicas: musicaDB
+                            });
+                        });
+
+
+                });
+        });
+}
+
+
+function buscarTermino(req, res) {
+
+    let termino = req.params.termino;
+    //expresion regular
+    let regex = new RegExp(termino, 'i');
+    Musica.find({ estado: true, nombre: regex })
+        // .populate('categoria','nombre')
+        .exec((err, musicasDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            res.json({
+                ok: true,
+                musicas: musicasDB
+            });
+        });
+
+
+}
+
+
+
 module.exports = {
     getMusica,
     saveMusica,
@@ -209,5 +276,7 @@ module.exports = {
     deleteMusica,
     uploadFile,
     getMusicaFile,
-    buscarMusica
+    buscarMusica,
+    getMusicasArtista,
+    buscarTermino
 }

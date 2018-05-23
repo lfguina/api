@@ -9,6 +9,8 @@ var usuario_routes = require('./routes/usuario');
 var artista_routes = require('./routes/artista');
 var albumes_routes = require('./routes/album');
 var musicas_routes = require('./routes/musica');
+var categorias_routes = require('./routes/categoria');
+
 
 
 
@@ -35,6 +37,8 @@ app.use('/api', usuario_routes);
 app.use('/api', artista_routes);
 app.use('/api', albumes_routes);
 app.use('/api', musicas_routes);
+app.use('/api', categorias_routes);
+
 
 
 

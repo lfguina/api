@@ -197,6 +197,30 @@ function getImageFile(req, res) {
     });
 }
 
+function buscarTermino(req, res) {
+
+    let termino = req.params.termino;
+    //expresion regular
+    let regex = new RegExp(termino, 'i');
+    Album.find({ estado: true, titulo: regex })
+        // .populate('categoria','nombre')
+        .exec((err, albumDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            res.json({
+                ok: true,
+                albumes: albumDB
+            });
+        });
+
+
+}
+
 module.exports = {
 
     getAlbum,
@@ -205,5 +229,6 @@ module.exports = {
     updateAlbum,
     deleteAlbum,
     uploadImagen,
-    getImageFile
+    getImageFile,
+    buscarTermino
 }

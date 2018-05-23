@@ -12,7 +12,7 @@ var AlbumSchema = Schema({
         type: Boolean,
         default: true
     },
-    artista: { type: Schema.ObjectId, ref: 'Artista' }
+    artista: [{ type: Schema.ObjectId, ref: 'Artista' }]
 
 }, { collection: 'albumes' });
 
