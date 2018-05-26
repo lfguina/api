@@ -62,7 +62,7 @@ function saveAlbum(req, res) {
     album.year = params.year;
     album.imagen = 'null';
     album.artista = params.artista;
-
+    album.categoria = params.categoria;
     album.save((err, albumStored) => {
 
         if (err) {
@@ -221,6 +221,30 @@ function buscarTermino(req, res) {
 
 }
 
+function buscarAlbumXCategoria(req, res) {
+
+    let termino = req.params.categoria;
+    //expresion regular
+    //let regex = new RegExp(termino, 'i');
+    Album.find({ estado: true, categoria: termino })
+        .populate('artista', 'nombre descripcion imagen')
+        .exec((err, albumDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            res.json({
+                ok: true,
+                albumes: albumDB
+            });
+        });
+
+
+}
+
 module.exports = {
 
     getAlbum,
@@ -230,5 +254,6 @@ module.exports = {
     deleteAlbum,
     uploadImagen,
     getImageFile,
-    buscarTermino
+    buscarTermino,
+    buscarAlbumXCategoria
 }

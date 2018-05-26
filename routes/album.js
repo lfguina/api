@@ -20,5 +20,8 @@ api.get('/imagen/album/:imageFile', AlbumController.getImageFile);
 api.get('/album/buscar/:termino', md_auth.ensureAuth, AlbumController.buscarTermino);
 //buscar por terminos
 
+api.get('/album/categoria/:categoria', md_auth.ensureAuth, AlbumController.buscarAlbumXCategoria);
+//buscar por categorias
+
 
 module.exports = api;

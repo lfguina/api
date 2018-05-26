@@ -267,6 +267,30 @@ function buscarTermino(req, res) {
 }
 
 
+function buscarMusicaXAlbum(req, res) {
+
+    let termino = req.params.album;
+    //expresion regular
+    //let regex = new RegExp(termino, 'i');
+    Musica.find({ estado: true, album: termino })
+        .populate('album', 'titulo artista imagen')
+        .exec((err, musicasDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } //finde del if err
+
+            res.send({
+                musicas: musicasDB
+            });
+        });
+
+
+}
+
+
 
 module.exports = {
     getMusica,
@@ -278,5 +302,6 @@ module.exports = {
     getMusicaFile,
     buscarMusica,
     getMusicasArtista,
-    buscarTermino
+    buscarTermino,
+    buscarMusicaXAlbum
 }

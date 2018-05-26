@@ -21,7 +21,8 @@ api.put('/musica/:id', md_auth.ensureAuth, MusicaController.updateMusica);
 api.delete('/musica/:id', md_auth.ensureAuth, MusicaController.deleteMusica);
 api.post('/upload/musica/:id', [md_auth.ensureAuth, md_upload], MusicaController.uploadFile);
 api.get('/get/musica/:songFile', MusicaController.getMusicaFile);
-
+api.get('/musica/album/:album', md_auth.ensureAuth, MusicaController.buscarMusicaXAlbum);
+//buscar por album
 
 
 module.exports = api;

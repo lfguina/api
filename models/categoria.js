@@ -1,10 +1,15 @@
 'use strict'
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 var CategoriaSchema = Schema({
-    nombre: String,
+    nombre: {
+        type: String,
+        unique: true,
+        required: [true, 'El nombre es necesario']
+    },
     descripcion: String,
 
     estado: {

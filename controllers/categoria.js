@@ -88,7 +88,7 @@ function saveCategoria(req, res) {
 
     categoria.save((err, categoriaStored) => {
         if (err) {
-            res.status(500).send({ ok: false, message: 'Error al guardar el artista' });
+            res.status(500).send({ ok: false, message: 'Existe un genero musical con el mismo nombre' });
         } else {
             if (!categoriaStored) {
                 res.status(400).send({ ok: false, message: 'La categoria no ha sido guardado' });
